@@ -9,7 +9,7 @@ export const ComponentFrame = () => {
     return <>
         <iframe
             ref={refIframe}
-            src="http://localhost:3000/"
+            src="https://my-iframe-test.vercel.app/"
         ></iframe>
     </>
 }
