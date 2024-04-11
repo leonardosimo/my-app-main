@@ -1,6 +1,9 @@
-
-import { ComponentFrame } from "@/components/componentFrame";
 import styles from "./page.module.css";
+import dynamic from 'next/dynamic'
+
+const DynamicComponent = dynamic(() => import('@/components/componentFrame'), {
+  ssr: true
+})
 
 export default function Home() {
 
@@ -16,8 +19,9 @@ export default function Home() {
           position: "relative"
         }}
       >
-        <ComponentFrame src={"http://localhost:3000/"} />
-        {/* <ComponentFrame src={"https://my-iframe-test.vercel.app"}/> */}
+        <DynamicComponent src={"http://localhost:3000/?id=asdasdasdasdasdas"} />
+        <DynamicComponent src={"http://localhost:3000/pagina/2"} />
+        {/* <DynamicComponent src={"https://my-iframe-test.vercel.app/"} /> */}
       </div>
       <div style={{
         height: "300px"
