@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useState } from "react"
 
-// interface customWindow extends Window {
-// 	Prometeo?: any
-// }
-// declare const window: customWindow
-
-
+const hosts = [
+  // "http://localhost:3012/", 
+  "http://localhost:3000/", 
+  "https://www.apuestatotal.com/", 
+  "https://calimaco.apuestatotal.dev/"
+]
 export const useFrameInfo = (refIframe) => {
 
   const [loading, setLoading] = useState(true)
@@ -15,28 +15,33 @@ export const useFrameInfo = (refIframe) => {
 
   useEffect(() => {
 
-
     if (window && refIframe && refIframe.current) {
       try {
+
         refIframe.current.addEventListener("load", () => {
           setLoading(false)
         })
 
-        const refAt = window.AT("page", {});
+        window.addEventListener('message', function (event) {
 
-        refAt.onHeight((data) => {
+          if (hosts.indexOf(event.origin) === -1) return null;
+
+          if (typeof event.data === "object" && !event.data?.detail) return null;
 
           setData({
-            height: (data.height + 10)
+            height: (event.data?.detail.height + 10)
           })
+
           setLoading(false)
         });
 
+        
       } catch (error) {
         setError(true)
       }
 
       return () => {
+        setLoading(false)
         window.removeEventListener('message', null)
       }
     }

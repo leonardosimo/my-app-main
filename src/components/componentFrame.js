@@ -1,15 +1,39 @@
 'use client'
-import { useHeightFrame } from "@/hooks/useHeightFrame";
-import { useRef } from "react";
+import { useFrameInfo } from "@/hooks/useHeightFrame";
+import { useId, useRef } from "react";
 
 
-export const ComponentFrame = () => {
+export const ComponentFrame = ({ src }) => {
     const refIframe = useRef()
-    const {loading, isSuccess   } = useHeightFrame(refIframe)
+    const id = useId()
+    const { loading, data } = useFrameInfo(refIframe)
     return <>
+        {
+            loading ? <div
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    background: "red",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    top: 0,
+                    left: 0
+                }}
+            >
+                LOADING....
+            </div>
+                : null
+        }
         <iframe
+            key={id}
+            style={{ height: data ? data.height : "0px" }}
             ref={refIframe}
-            src="https://my-iframe-test.vercel.app/"
+            src={
+                // "http://localhost:3000/"
+                src
+            }
         ></iframe>
     </>
 }

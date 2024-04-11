@@ -12,10 +12,12 @@ export default function Home() {
       <div
         style={{
           width: "100%",
-          minHeight: "auto"
+          minHeight: "auto",
+          position: "relative"
         }}
       >
-        <ComponentFrame />
+        <ComponentFrame src={"http://localhost:3000/"} />
+        {/* <ComponentFrame src={"https://my-iframe-test.vercel.app"}/> */}
       </div>
       <div style={{
         height: "300px"
